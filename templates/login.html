@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Login Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <link rel="stylesheet" href="/static/css/login.css">-->
+    <link rel="stylesheet" href="/static/css/login.css">
     <style>
    .card{
         border: 1px solid black;
@@ -66,31 +66,29 @@
 
 </head>
 <body>
-{% if msg %}
+    {% if msg %}
     <h2>{{msg}}</h2>
-{% endif %}
-<div class="card">
-
-    <div class="head">
-         <h1 style="color: red; text-align: center"> Login </h1>
-    </div>
-    <div class="card1">
-        <form method="POST">
-
-        <div>
-        <label>User_Name :</label><br>
-        <input name="uname" type="text"/><br>
-        </div>
-         <div>
-        <label>Password :</label><br>
-        <input name="pass" type="password"/><br>
-        </div>
-        <div><br>
-         <button>Login</button><br>
+    {% endif %}
+    <div class="card">
+        <div class="head">
+            <h1 style="color: red; text-align: center"> Login </h1>
          </div>
-        </form>
-         <p class="bottom">New user then  <a class="bottom" href="{{url_for('signup')}}"> Register here</a></p>
+        <div class="card1">
+            <form method="POST">
+            <div>
+                <label>User_Name :</label><br>
+                <input name="uname" type="text"/><br>
+            </div>
+            <div>
+                <label>Password :</label><br>
+                <input name="pass" type="password"/><br>
+            </div>
+            <div><br>
+                <button>Login</button><br>
+            </div>
+            </form>
+            <p class="bottom">New user then  <a class="bottom" href="{{url_for('signup')}}"> Register here</a></p>
+        </div>
     </div>
-</div>
 </body>
 </html>

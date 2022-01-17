@@ -23,7 +23,6 @@ def signup():
     error = ""
     msg = ""
     cur = db.connection.cursor()
-
     if request.method == 'POST':
         f_name = request.form.get('fname')
         l_name = request.form.get('lname')
@@ -33,8 +32,11 @@ def signup():
         address = request.form.get('add')
         password1 = request.form.get('pass')
         password2 = request.form.get('pass1')
-        # if f_name or l_name or email or uname or phone or address or password1 or password2:
-        #     error = 'Please enter the all details'
+        query = f"select Email from userdata where Email ='{email}'"
+        cur.execute(query)
+        data = cur.fetchone()
+        if data:
+            error = 'Email already exist'
         if len(password1) < 6:
             error = 'password should have at list 6 char'
         elif password1 != password2:
@@ -66,19 +68,18 @@ def logout():
 
 @App.route('/login', methods=['POST', 'GET'])
 def signin():
-    # user_info = request.form
-    msg = ' '
-
     name = request.form['uname']
     password = request.form['pass']
     if name and password:
         cur = db.connection.cursor()
-        cur.execute("SELECT username, password from userdata where username=%s and password=%s ", (name, password))
+        cur.execute("SELECT username, password, Email from userdata where username=%s and password=%s ",
+                    (name, password))
         data = cur.fetchone()
         try:
             session['loggedin'] = True
             session['username'] = data[0]
             session['password'] = data[1]
+            session['email'] = data[2]
             msg = "Login Successfully!!!"
             return render_template('home.html', msg=msg, user=session['username'])
         except:
@@ -100,11 +101,8 @@ def index():
 def display():
     if 'loggedin' in session:
         cur = db.connection.cursor()
-        print(session)
-        cur.execute(f"SELECT * FROM userdata WHERE Username ='{session['username']}'")
+        cur.execute(f"SELECT * FROM userdata WHERE Email ='{session['email']}'")
         account = cur.fetchone()
-        print(type(account))
-        print(account)
         return render_template("display.html", account=account, user=session['username'])
     return redirect(url_for('login'))
 
@@ -127,38 +125,95 @@ def update():
         address = request.form.get('add')
         password1 = request.form.get('pass')
         password2 = request.form.get('pass1')
-
+        print('get')
         query = f"Update userdata SET First_Name='{fname}', Last_Name='{lname}', Email='{email}',Username='{uname}'," \
                 f" Phone='{phone}', Address='{address}', password='{password1}', Cpassword='{password2}' " \
-                f"where Username ='{session['username']}'"
-
+                f"where Email ='{session['email']}'"
+        print('set')
         cur.execute(query)
         db.connection.commit()
         msg = "Your account updated successfully."
     else:
         msg = "Some error occurs."
-        return render_template("update.html", msg=msg, user=session['username'])
-    return redirect(url_for('update'))
+    return render_template("update.html", msg=msg, user=session['username'])
 
 
 @App.route("/evses")
 def evses():
-    return render_template('evses.html', user=session['username'])
+    if session:
+        cur = db.connection.cursor()
+        cur.execute(f"SELECT * FROM evs WHERE Email ='{session['email']}'")
+        acc = cur.fetchall()
+        return render_template('evses.html', user=session['username'], acc=acc)
 
 
 @App.route("/add")
+def add1():
+    return render_template('add.html')
+
+
+@App.route("/add", methods=['POST', 'GET'])
 def add():
-    return render_template('add.html', user=session['username'])
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        make = request.form.get('make')
+        model = request.form.get('model')
+        model_year = request.form.get('model_year')
+        color = request.form.get('color')
+        email = session['email']
+        if email and make and model and model_year and color:
+            query = "INSERT INTO evs (Email, Make, Model , Model_Year, Color" \
+                    ") VALUES ( %s, %s, %s, %s, %s) "
+            cur.execute(query, (email, make, model, model_year, color))
+            db.connection.commit()
+            msg = "Evs added successfully."
+        else:
+            error = 'please enter the all details'
+            return render_template('add.html', error=error)
+        return render_template('add.html', msg=msg)
+    return redirect(url_for('add'))
+
+
+@App.route("/remove", methods=['POST', 'GET'])
+def remove1():
+    return render_template("remove.html", user=session['username'])
 
 
 @App.route("/remove", methods=['POST', 'GET'])
 def remove():
-    return render_template('remove.html', user=session['username'])
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        model = request.form.get('model')
+        query = f"Delete from evs where Model ='{model}'"
+        cur.execute(query)
+        db.connection.commit()
+        msg = "Your Evs Deleted successfully."
+    else:
+        msg = "Some error occurs."
+    return render_template("remove.html", msg=msg, user=session['username'])
+
+
+@App.route("/modify", methods=['POST', 'GET'])
+def modify1():
+    return render_template("modify.html", user=session['username'])
 
 
 @App.route("/modify", methods=['POST', 'GET'])
 def modify():
-    return render_template('modify.html', user=session['username'])
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        make = request.form.get('make')
+        model = request.form.get('model')
+        model_year = request.form.get('model_year')
+        color = request.form.get('color')
+        query = f"Update evs SET Make='{make}', Model='{model}', Model_Year='{model_year}', Color='{color}' " \
+                f"where Model ='{model}'"
+        cur.execute(query)
+        db.connection.commit()
+        msg = "Your Evs updated successfully."
+    else:
+        msg = "Some error occurs."
+    return render_template("modify.html", msg=msg, user=session['username'])
 
 
 if __name__ == '__main__':

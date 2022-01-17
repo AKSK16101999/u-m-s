@@ -3,6 +3,7 @@
 		<title>display</title>
 		<link rel="stylesheet" href="/static/css/style.css">
 		<style>
+
 		*{
 		margin: 0;
 		padding: 0;
@@ -19,7 +20,7 @@
 		.one .two{
 		min-width: 10%;
 		height: 100%;
-		background-color: #009933;
+		background-color:  #009933;
 		padding: 30px 0px;
 		position: fixed;
 		}
@@ -65,39 +66,40 @@
 		}
 
 		table,th,td{
-		border: 1px solid black;
-		border-collapse: collapse;
-		}
+			border: 1px solid black;
+			border-collapse: collapse;
+			}
 		table{
-		margin-left:30%;
-		margin-right:40%;
-		width:50%;
-		}
+			margin-left:40%;
+			margin-right:40%;
+			width:60%;
+			}
 		td{
-		height:30px;
-		vertical-align:center;
-		text-align: left;
-		}
+			height:30px;
+			vertical-align:center;
+			text-align: left;
+			}
 		th{
-		background-color:gray;
-		color:white;
-		height:100px;
-		text-align: center;
-		}
+			background-color:gray;
+			color:white;
+			height:100px;
+			text-align: center;
+			}
 		th,td{
-		padding:10px;
-		}
-	</style>
+			padding:10px;
+			}
+		</style>
 	</head>
 	<body bgcolor="#e6ffee">
 		<div class="one">
 			<div class="two">
 				<h3>{{user}}</h3>
 				<ul>
-					<li class="active"><a href="{{url_for('display')}}">View_Info</a></li>
-					<li><a href="{{url_for('update')}}">Update_Info</a></li>
-					 <li><a href="{{url_for('evses')}}">Evses</a></li>
-					<li><a href="{{url_for('logout')}}">Log out</a></li>
+					<li><a href="{{url_for('index')}}">Profile</a></li>
+                    <li class="active"><a href="{{url_for('add')}}">Add_Evses</a></li>
+                    <li><a href="{{url_for('remove')}}">Remove_Evses</a></li>
+                    <li><a href="{{url_for('modify')}}">Modify_Evses</a></li>
+					<li><a href="{{url_for('logout')}}">LOG OUT</a></li>
 				</ul>
 			</div>
 			<div class="content" align="center">
@@ -110,32 +112,20 @@
 						<div class="border">
 							<table></br></br></br></br>
 								<tr>
-									<td>First Name:</td>
+									<td> Make:</td>
 									<td>{{ account[1] }}</td>
 								</tr>
 								<tr>
-									<td>Last Name:</td>
+									<td>Model:</td>
 									<td>{{ account[2] }}</td>
 								</tr>
 								<tr>
-									<td>Email:</td>
+									<td>Model_Year:</td>
 									<td>{{ account[3] }}</td>
 								</tr>
 								<tr>
-									<td>Username:</td>
+									<td>Color:</td>
 									<td>{{ account[4] }}</td>
-								</tr>
-								<tr>
-									<td>Phone:</td>
-									<td>{{ account[5] }}</td>
-								</tr>
-								<tr>
-									<td>Address:</td>
-									<td>{{ account[6] }}</td>
-								</tr>
-								<tr>
-									<td>Password:</td>
-									<td>{{ account[7] }}</td>
 								</tr>
 							</table>
 						</div>

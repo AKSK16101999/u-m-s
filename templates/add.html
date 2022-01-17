@@ -1,106 +1,100 @@
 <html lang="en">
 	<head>
 		<title>Add</title>
-		<link rel="stylesheet" href="../static/css/style.css">
-		       <style>
+		<link rel="stylesheet" href="/static/css/style.css">
+		<style>
 
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	list-style: none;
-	text-decoration: none;
-	font-family: 'Josefin Sans', sans-serif;
-}
+		*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		list-style: none;
+		text-decoration: none;
+		font-family: 'Josefin Sans', sans-serif;
+		}
 
-.one{
-	display: flex;
-}
+		.one{
+		display: flex;
+		}
 
-.one .two{
-	min-width: 10%;
-	height: 100%;
-	background-color: grey;
-	padding: 30px 0px;
-	position: fixed;
-}
+		.one .two{
+		min-width: 10%;
+		height: 100%;
+		background-color: #009933 ;
+		padding: 30px 0px;
+		position: fixed;
+		}
 
-.one .two h1{
-	color: #fff;
-	text-transform: uppercase;
-	text-align: center;
-	margin-bottom: 30px;
-	font-style: oblique;
-	font-weight: bold;
-}
+		.one .two h1{
+		color: #fff;
+		text-transform: uppercase;
+		text-align: center;
+		margin-bottom: 30px;
+		font-style: oblique;
+		font-weight: bold;
+		}
 
-.one .two h2{
-	color: #fff;
-	text-align: center;
-}
+		.one .two h2{
+		color: #fff;
+		text-align: center;
+		}
 
-.one .two .active{
-	background: #0a8032;
-}
+		.one .two .active{
+		background: #0a8032;
+		}
 
-.one .two ul li{
-	text-align: center;
-	padding: 15px;
-	border-bottom: 0.1px solid white;
-	border-top: 0.1px solid white;
-}
+		.one .two ul li{
+		text-align: center;
+		padding: 15px;
+		border-bottom: 0.1px solid white;
+		border-top: 0.1px solid white;
+		}
 
-.one .two ul li a{
-	color: #ffffff;
-	display: block;
-}
+		.one .two ul li a{
+		color: #ffffff;
+		display: block;
+		}
 
-.one .two ul li a .side{
-	width: 25px;
-	align:center;
-}
+		.one .two ul li a .side{
+		width: 25px;
+		align:center;
+		}
 
-.one .content{
-	width: 100%;
-	margin-left: 0px;
-}
-        </style>
+		.one .content{
+		width: 100%;
+		margin-left: 0px;
+		}
+
+		</style>
 	</head>
-	<body bgcolor="#e6ffee">
-		<div class="one">
-			<div class="two">
-				<h3>{{user}}</h3>
-				<ul>
-<!--					 <li><a href="{{url_for('evses')}}">EVSES</a></li>-->
-					<li><a href="{{url_for('index')}}">Profile</a></li>
-                    <li class="active"><a href="{{url_for('add')}}">Add_Evses</a></li>
-                    <li><a href="{{url_for('remove')}}">Remove_Evses</a></li>
-                    <li><a href="{{url_for('modify')}}">Modify_Evses</a></li>
-					<li><a href="{{url_for('logout')}}">LOG OUT</a></li>
-<!--                    <li><a href="{{url_for('index')}}">PROFILE</a></li>-->
-				</ul>
-			</div>
-			<div class="content" align="center">
-				<div class="topbar">
-					<h2>Welcome!! You are in EVSES Add Page!! </h2>
-				</div></br></br>
-				<div class="contentbar">
-				<h1>Add Your Details</h1></br>
+<body bgcolor="#e6ffee">
+	<div class="one">
+		<div class="two">
+			<h3>{{user}}</h3>
+			<ul>
+				<li><a href="{{url_for('index')}}">Profile</a></li>
+                <li class="active"><a href="{{url_for('add')}}">Add_Evses</a></li>
+                <li><a href="{{url_for('remove')}}">Remove_Evses</a></li>
+                <li><a href="{{url_for('modify')}}">Modify_Evses</a></li>
+				<li><a href="{{url_for('logout')}}">LOG OUT</a></li>
+			</ul>
+		</div>
+		<div class="content" align="center">
+			<div class="topbar">
+				<h2>Welcome!! You are in EVSES Add Page!! </h2>
+			</div></br></br>
+			<div class="contentbar">
+				<h1>Add EVS</h1></br>
 				<form action="/add" method="POST">
 					<div class="msg">{{ msg }}</div>
-					<input type="text" name="fname" placeholder="Enter Your First Name" class="textbox" id="fname" required></br></br>
-					<input type="text" name="lname" placeholder="Enter Your Last Name" class="textbox" id="lname" required></br></br>
-					<input type="text" name="email" placeholder="Enter Your Email ID" class="textbox" id="email" required></br></br>
-					<input type="text" name="uname" placeholder="Enter Your Username" class="textbox" id="uname" required></br></br>
-					<input type="text" name="phone" placeholder="Enter Your Phone number" class="textbox" id="phone" required></br></br>
-					<input type="text" name="add" placeholder="Enter Your Address" class="textbox" id="add" required></br></br>
-					<input type="password" name="pass" placeholder="Enter Your Password" class="textbox" id="pass" required></br></br>
-					<input type="password" name="pass1" placeholder="ReEnter Your Password" class="textbox" id="pass1" required></br></br>
-					<input type="submit" class="btn" value="Update">
-			</form>
+						<input type="text" name="make" placeholder="Enter Make company name" class="textbox" id="make" required></br></br>
+						<input type="text" name="model" placeholder="Enter model name" class="textbox" id="model" required></br></br>
+						<input type="text" name="model_year" placeholder="Enter model year" class="textbox" id="model_year" required></br></br>
+						<input type="text" name="color" placeholder="Enter model color" class="textbox" id="color" required></br></br>
+						<input type="submit" class="btn" value="Add">
+				</form>
 				</div>
-
-			</div>
 		</div>
-	</body>
+	</div>
+</body>
 </html>
